@@ -4,7 +4,7 @@ Plugin Name: SmugMug Embed
 Plugin URI: http://www.wicklundphotography.com/smugmugembed-wordpress-plugin
 Description: Embeds images from a users SmugMug account into a post or page
 Author: Tracy Wicklund	
-Version: 0.92
+Version: 0.93
 Author URI: http://www.wicklundphrography.com/
 */
 
