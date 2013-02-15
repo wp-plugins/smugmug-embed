@@ -4,7 +4,7 @@ Donate link: http://www.wicklundphotography.com/smugmugembed-wordpress-plugin
 Tags: SmugMug, Smug Mug, images, embed, integration
 Requires at least: 3.0.1
 Tested up to: 3.51
-Stable tag: trunk
+Stable tag: 0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,7 +56,11 @@ The gallery is locked.
 
 == Changelog ==
 
-= 1.0 =
+
+= 0.91 =
+* adding uninstall.php to clean up options
+
+= 0.9 =
 * SmugMug Embed initial release
 
 
