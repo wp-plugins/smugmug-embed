@@ -56,7 +56,11 @@ The gallery is locked.
 
 == Changelog ==
 
-= 1.0 =
+
+= 0.91 =
+* adding uninstall.php to clean up options
+
+= 0.9 =
 * SmugMug Embed initial release
 
 
