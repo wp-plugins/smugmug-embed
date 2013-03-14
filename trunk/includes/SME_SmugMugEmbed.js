@@ -8,7 +8,7 @@ function ajaxSubmit(){
 	SME_ChooseGalleryForm= jQuery(SME_ChooseGalleryForm).serialize();
 	jQuery.ajax({
 	type:"POST",
-	url: "/wp-admin/admin-ajax.php",
+	url: "../wp-admin/admin-ajax.php",
 	data: SME_ChooseGalleryForm,
 	success:function(data){
 	jQuery("#SME_imageViewer").html(data);
@@ -95,7 +95,7 @@ function ajaxInsert(){
 	SME_insertForm = jQuery(SME_insertForm).serialize();
 	jQuery.ajax({
 	type:"POST",
-	url: "/wp-admin/admin-ajax.php",
+	url: "../wp-admin/admin-ajax.php",
 	data:SME_insertForm,
 	success:function(data){
 	jQuery("#SME_hiddenDiv").html(data);
