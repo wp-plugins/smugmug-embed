@@ -2,9 +2,9 @@
 Contributors: twicklund
 Donate link: http://www.wicklundphotography.com/smugmugembed-wordpress-plugin
 Tags: SmugMug, Smug Mug, images, embed, integration
-Requires at least: 3.0.1
+Requires at least: 3.2
 Tested up to: 3.51
-Stable tag: 0.92
+Stable tag: 0.93
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,9 @@ The gallery is locked.
 
 == Changelog ==
 
+= 0.93 =
+* Fixed an issue causing the white screen of death at plugin start (thanks Lord Laughter)
+* Fixed an issue with pathing which threw errors on WP installs not at the root directory
 
 = 0.92 =
 * adding uninstall.php to clean up options
