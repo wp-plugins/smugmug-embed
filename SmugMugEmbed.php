@@ -84,12 +84,12 @@ require_once( dirname( __FILE__ ) . '/includes/SME-smugmugembed_shortcode.php' )
   function showSMEAuthorizeMessage() {
         global $SME_api_progress;
         if ( $SME_api_progress!= 4 ) {
-            echo '<div id="message" class="error"><p><strong>SmugMug Responsive Slider needs to be authorized before use.  To start the process, please <a href="/wp-admin/options-general.php?page=smugmugembed-settings" title="authorize SmugMug Embed">click here</a></strong></p></div>';
+            echo '<div id="message" class="error"><p><strong>SmugMug Embed needs to be authorized before use.  To start the process, please <a href="../wp-admin/options-general.php?page=smugmugembed-settings" title="authorize SmugMug Embed">click here</a></strong></p></div>';
         }
     }
     
     function showSMEAdminMessages() {
-        showMessage( "SmugMug Embed needs to be authorized before it will work.", true );
+        showSMEAuthorizeMessage( "SmugMug Embed needs to be authorized before it will work.", true );
     }
 
     add_action( 'admin_notices', 'showSMEAdminMessages' );

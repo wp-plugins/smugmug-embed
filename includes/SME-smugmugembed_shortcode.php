@@ -18,7 +18,7 @@
     function SME_media_embed_form() {
        global $SME_api,$SME_Settings,$SME_api_progress, $SME_smugmugembed_api;
         if ( $SME_api_progress!= 4 ) {
-            echo '<div id="message" class="error"><p><strong>SmugMug Embed needs to be authorized before use.  To start the process, please <a href="/wp-admin/options-general.php?page=smugmugembed-settings" title="authorize SmugMug Embed">click here</a></strong></p></div>';
+            echo '<div id="message" class="error"><p><strong>SmugMug Embed needs to be authorized before use.  To start the process, please <a href="../wp-admin/options-general.php?page=smugmugembed-settings" title="authorize SmugMug Embed">click here</a></strong></p></div>';
             return;
         }
 
