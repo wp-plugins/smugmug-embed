@@ -118,7 +118,8 @@ require_once( dirname( __FILE__ ) . '/includes/SME-smugmugembed_shortcode.php' )
                                     'caption'      => 0,
                                     'keywords'         => 0,
                                     'imageName'       => 0,
-                                    'defaultSize'     => 0
+                                    'newWindow'       => "No",
+                                   'defaultSize'     => 0
                                )
         );
     }    

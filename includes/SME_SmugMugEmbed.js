@@ -1,7 +1,11 @@
 var selectedImages = [];
 
 /////adds images from smugmug
-
+jQuery().ready(function(){           
+  jQuery('#SME_ChosenGallery').change(function () {  
+    jQuery('#chosenGallery').val(jQuery(this).val());              
+  });
+});
 function ajaxSubmit(){
 	SME_clearAll();
 	var SME_ChooseGalleryForm = document.getElementById("SME_ChooseGalleryForm");
@@ -116,3 +120,9 @@ function SME_removeFromPreview(el) {
 	
        jQuery(el).remove();
        } 
+function validateForm(el) {
+     var atLeastOneIsChecked = jQuery('#sizes').is(':checked');
+alert(atLeastOneIsChecked);
+return false;
+
+}

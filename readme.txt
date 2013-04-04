@@ -56,6 +56,11 @@ The gallery is locked.
 
 == Changelog ==
 
+= 1.0 =
+* Added ability to link to Cart in SmugMug.  The image is automatically added to the cart!
+* Added ability to open the link in a new window
+* Fixed several labels in both the admin panel and the embed form to be more user friendly
+
 = 0.93 =
 * Fixed an issue causing the white screen of death at plugin start (thanks Lord Laughter)
 * Fixed an issue with pathing which threw errors on WP installs not at the root directory

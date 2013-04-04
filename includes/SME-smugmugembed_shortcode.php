@@ -38,13 +38,15 @@
             $SME_caption = $SME_Settings['caption'];
             $SME_keywords= $SME_Settings['keywords'];
             $SME_fileName = $SME_Settings['imageName'];
+            $SME_defaultNewWindow = $SME_Settings['newWindow'];
+
                         ?>
             <div class="SME_attachments-browser">
             	<div class="SME_media-toolbar">
             		<div class="SME_media-toolbar-secondary">
             		  <form method="POST" action="" id="SME_ChooseGalleryForm">
             		  <input type="hidden" name="action" value="SME_getImagesFromGallery"/>
-            			<select name="SME_ChosenGallery" onchange=ajaxSubmit();>
+            			<select id="SME_ChosenGallery" name="SME_ChosenGallery" onchange=ajaxSubmit();>
             			<option value="">Select Gallery</option>
             			<?php
 				$foundLock="false";
@@ -66,6 +68,7 @@
 
              	</ul>
              	<form id="insertForm" action="" method="post">
+<input type=hidden id="chosenGallery" name="chosenGallery" />
              	<div class="SME_media-sidebar">
              		<div class="SME_attachment-details">
              		<h3 class="hndle">Image Settings</h3>
@@ -115,12 +118,20 @@
 				<?php
 				   if ($SME_smug_response) {
 				     foreach ($SME_smug_response as $SME_response => $SME_responseValue) {
+ 					 $SME_responseText=$SME_response;
+  					 if ($SME_responseText=="URL")$SME_responseText="SmugMug Gallery";
+  					 if ($SME_responseText=="Lightbox")$SME_responseText="SmugMug Lighbox";
 				         if ($SME_responseValue)
-				          echo '<option ', (($SME_response == $SME_default_response) ?  "selected" : "") ,' value="'.$SME_response.'">'.$SME_response.'</option>';
+				          echo '<option ', (($SME_response == $SME_default_response) ?  "selected" : "") ,' value="'.$SME_response.'">'.$SME_responseText.'</option>';
 				     }
 				   }
 				 ?>    
 				</select>
+			</div>
+			<div class="setting newWindow">
+				<span>New Window?</span>
+				<input type="checkbox" style="float:left;width:auto;" name="newWindow" value="Yes" <?php echo '',($SME_defaultNewWindow=="Yes") ? "checked" : "" ,' '; ?> class="link-to"  data-user-setting="new window" name="newWindow" id="newWindow" data-setting="newWindow"/>
+				     
 			</div>
 			<label class="setting">
 				<span>
@@ -211,12 +222,18 @@ function SME_translateMeta($meta,$image) {
    return $meta;
 }
 function SME_sendImagesToEditor() {
+     global $SME_api,$SME_Settings,$SME_api_progress, $SME_smugmugembed_api;
+
      $SME_images=$_SESSION['SME_images'];
      $SME_selectedImages = explode(",",$_POST["selectedImages"]);
      $SME_link=$_POST['link'];
      $SME_size=$_POST['size'];
      $SME_align=$_POST['align'];  
      $SME_border=$_POST['border'];  
+     $SME_ChosenGallery=explode("|",$_POST['chosenGallery']);
+
+     $SME_newWin=$_POST['newWindow'];  
+
      if (!empty($SME_border)) $SME_border = "style='border:1px solid black'";
       
      foreach ($SME_selectedImages as $SME_selectedImage =>$SME_selectedImageValue) {
@@ -262,7 +279,7 @@ function SME_sendImagesToEditor() {
         {
         ///this is not working yet so we took it out of release 1
            case "Shopping":
-               // $imageLink= 'http://' . $SME_api[ 'api' ][ 'NickName' ] . '.smugmug.com/buy/' . $image['album']['id']. '_' . $image['album']['key'] . '/' . $image[ 'id' ] . '_' . $image[ 'Key' ];
+                $imageLink= 'http://' .$SME_smugmugembed_api[ 'api' ][ 'NickName' ] . '.smugmug.com/buy/' . $SME_ChosenGallery[0]. '_' . $SME_ChosenGallery[1] . '/' . $image[ 'id' ] . '_' . $image[ 'Key' ];
 
         	break;
            case "Lightbox":
@@ -272,12 +289,18 @@ function SME_sendImagesToEditor() {
            case "Large":
                 $imageLink= $image['LargeURL'];
         	break;
+           case "URL":
+                $imageLink= $image['URL'];
+        	break;
            default:
            	$imageLink="";
         	break;      
         }  
-        if ($imageLink!="")
-            $html="<a href='".$imageLink."'>".$html."</a>";
+        if ($imageLink!=""){
+            $newWindow="";
+            if ($SME_newWin=="Yes") $newWindow="target=_blank ";
+            $html="<a href='".$imageLink."' ".$newWindow." >".$html."</a>";
+         }
         if (!empty($SME_caption)){
             $html="[caption width='".$SME_width."' align='".$float."' id='']".$html.$SME_caption."[/caption]";      
             }

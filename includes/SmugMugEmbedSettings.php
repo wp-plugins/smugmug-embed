@@ -82,16 +82,16 @@
                     <tr valign="top">
                         <th scope="row">What sizes should be available to the author when inserting an image? </th>
                         <td>
-                            <input type="checkbox" name="SME_Settings[availableSizes][Thumbnail]"  <?php if ( isset( $SME_smug_available_sizes['Thumbnail'] ) ) {
+                            <input type="checkbox" id="sizes[thumbnail]" name="SME_Settings[availableSizes][Thumbnail]"  <?php if ( isset( $SME_smug_available_sizes['Thumbnail'] ) ) {
                                             echo 'checked="checked"';
                                         } ?> /> Thumbnail<br />
-                            <input type="checkbox" name="SME_Settings[availableSizes][Small]"   <?php if ( isset( $SME_smug_available_sizes['Small'] ) ) {
+                            <input type="checkbox"  id="sizes[small]" name="SME_Settings[availableSizes][Small]"   <?php if ( isset( $SME_smug_available_sizes['Small'] ) ) {
                                             echo 'checked="checked"';
                                         } ?> /> Small<br />
-                            <input type="checkbox" name="SME_Settings[availableSizes][Medium]"  <?php if ( isset( $SME_smug_available_sizes['Medium'] ) ) {
+                            <input type="checkbox"  id="sizes[medium]"  name="SME_Settings[availableSizes][Medium]"  <?php if ( isset( $SME_smug_available_sizes['Medium'] ) ) {
                                             echo 'checked="checked"';
                                         } ?> /> Medium<br />
-                            <input type="checkbox" name="SME_Settings[availableSizes][Large]"   <?php if ( isset( $SME_smug_available_sizes['Large'] ) ) {
+                            <input type="checkbox"  id="sizes[large]" name="SME_Settings[availableSizes][Large]"   <?php if ( isset( $SME_smug_available_sizes['Large'] ) ) {
                                             echo 'checked="checked"';
                                         } ?> /> Large<br />                                                                             
                         </td>
@@ -113,15 +113,18 @@
                              <input type="checkbox" name="SME_Settings[availableClickResponses][None]"  <?php if ( isset( $SME_smug_available_clicks['None'] ) ) {
                                             echo 'checked="checked"';
                                         } ?> /> No Link<br/>
-                            <!-- removed for version 1 <input type="checkbox" name="SME_Settings[availableClickResponses][Shopping]"  <?php if ( isset( $SME_smug_available_clicks['Shopping'] ) ) {
-                                            echo 'checked="checked"';
-                                        } ?> /> Shopping Cart<br/> -->
                              <input type="checkbox" name="SME_Settings[availableClickResponses][Large]"  <?php if ( isset( $SME_smug_available_clicks['Large'] ) ) {
                                             echo 'checked="checked"';
                                         } ?> /> Large Image<br/>
+                          <input type="checkbox" name="SME_Settings[availableClickResponses][Shopping]"  <?php if ( isset( $SME_smug_available_clicks['Shopping'] ) ) {
+                                            echo 'checked="checked"';
+                                        } ?> />SmugMug Shopping Cart<br/>
+                           <input type="checkbox" name="SME_Settings[availableClickResponses][URL]"  <?php if ( isset( $SME_smug_available_clicks['URL'] ) ) {
+                                            echo 'checked="checked"';
+                                        } ?> /> SmugMug Gallery<br/> 
                              <input type="checkbox" name="SME_Settings[availableClickResponses][Lightbox]"  <?php if ( isset( $SME_smug_available_clicks['Lightbox'] ) ) {
                                             echo 'checked="checked"';
-                                        } ?> /> Lightbox<br/>                                                                                                                   
+                                        } ?> />SmugMug Lightbox<br/>                                                                                                                   
                         </td>
                     </tr>
                     <tr valign="top">
@@ -129,9 +132,19 @@
                         <td>
                             <select name="SME_Settings[clickResponse]">
                                 <option value="None" <?php selected( $SME_Settings[ 'clickResponse' ], 'None' ); ?>>No Link</option>                            
-                              <!--  removed for version 1<option value="Shopping" <?php selected( $SME_Settings[ 'clickResponse' ], 'Shopping' ); ?>>Shopping Cart</option>-->
                                 <option value="Large" <?php selected( $SME_Settings[ 'clickResponse' ], 'Large' ); ?>>Large Image</option>
-                                <option value="Lightbox" <?php selected( $SME_Settings[ 'clickResponse' ], 'Lightbox' ); ?>>Lightbox</option>                                
+                             <option value="Shopping" <?php selected( $SME_Settings[ 'clickResponse' ], 'Shopping' ); ?>>SmugMug Shopping Cart</option>
+                                <option value="URL" <?php selected( $SME_Settings[ 'clickResponse' ], 'URL' ); ?>>SmugMug Gallery</option>
+                                <option value="Lightbox" <?php selected( $SME_Settings[ 'clickResponse' ], 'Lightbox' ); ?>>SmugMug Lightbox</option>                                
+                            </select>
+                        </td>
+                    </tr>  
+			<tr valign="top">
+                        <th scope="row">Default for "Open in new window"?  </th>
+                        <td>
+                            <select name="SME_Settings[newWindow]">
+                                <option value="Yes" <?php selected( $SME_Settings[ 'newWindow' ], 'Yes' ); ?>>Yes</option>                            
+                                <option value="No" <?php selected( $SME_Settings[ 'newWindow' ], 'No' ); ?>>No</option>
                             </select>
                         </td>
                     </tr>                    
