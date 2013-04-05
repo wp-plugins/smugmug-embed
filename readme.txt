@@ -17,7 +17,7 @@ Allows users to search and embed images into posts or pages directly from their 
 This plugin adds a tab into the media manager which gives authors access to a linked Smug Mug account.
 
 The plugin first authorizes the user to a smug mug account.  In the settings screen, the administrator decides which galleries will be available to the author, the sizes available, and several other options.
-
+ 
 
 == Installation ==
 
