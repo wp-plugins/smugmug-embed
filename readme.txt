@@ -56,6 +56,9 @@ The gallery is locked.
 
 == Changelog ==
 
+= 1.01 =
+*  No Changes - Something went wrong while releasing 1.0 on the plugin repo.  Re-releasing as 1.01
+
 = 1.0 =
 * Added ability to link to Cart in SmugMug.  The image is automatically added to the cart!
 * Added ability to open the link in a new window
