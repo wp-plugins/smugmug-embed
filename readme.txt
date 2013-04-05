@@ -4,7 +4,7 @@ Donate link: http://www.wicklundphotography.com/smugmugembed-wordpress-plugin
 Tags: SmugMug, Smug Mug, images, embed, integration
 Requires at least: 3.2
 Tested up to: 3.51
-Stable tag: 1.0
+Stable tag: 0.93
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,8 +17,7 @@ Allows users to search and embed images into posts or pages directly from their 
 This plugin adds a tab into the media manager which gives authors access to a linked Smug Mug account.
 
 The plugin first authorizes the user to a smug mug account.  In the settings screen, the administrator decides which galleries will be available to the author, the sizes available, and several other options.
-
-
+ 
 
 == Installation ==
 
