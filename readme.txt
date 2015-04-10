@@ -3,7 +3,7 @@ Contributors: twicklund
 Donate link: http://www.wicklundphotography.com/smugmugembed-wordpress-plugin
 Tags: SmugMug, Smug Mug, images, embed, integration
 Requires at least: 3.2
-Tested up to: 3.51
+Tested up to: 4.1.1
 Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
