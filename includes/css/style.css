@@ -31,7 +31,8 @@
     z-index: 75;
     background: none repeat scroll 0% 0% rgb(245, 245, 245);
     border-left: 1px solid rgb(223, 223, 223);
-    overflow: auto;
+    overflow: scroll;
+	margin-bottom:47px;
 }
 
 .SME_media-frame-toolbar {
@@ -173,6 +174,7 @@
     font-size: 14px;
     line-height: 20px;
     font-weight: bold;
+	margin-top: 5px;
 }
 
 .SME_media-selection {
@@ -185,12 +187,12 @@
     overflow: hidden;
     white-space: nowrap;
 }
-.SME_media-selection .SME_clear-selection {
+.SME_media-selection .SME_clear-selection ,.SME_ClearCache{
     color: red;
     text-decoration:none;
 
 }
-.SME_media-selection .SME_clear-selection:hover {
+.SME_media-selection .SME_clear-selection:hover , ,.SME_ClearCache:hover{
     color: white;
     background-color:red;
 

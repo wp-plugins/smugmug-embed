@@ -42,8 +42,11 @@ function myEndSession() {
 
 
 require_once( dirname( __FILE__ ) . '/includes/SmugMugEmbedSettings.php' );
+
 require_once( dirname( __FILE__ ) . '/includes/lib/phpSmug/phpSmug.php' );
 require_once( dirname( __FILE__ ) . '/includes/SME-smugmugembed_shortcode.php' );
+    add_action( 'wp_footer', 'SME_slider_print_scripts' );
+
 //Create SmugMug API Class
     $SME_api   = new SME_phpSmug( "APIKey=hLIFIsmrKd7lITN7j22SNggj4ITyFl1s", "AppName=SmugMug Embed", "OAuthSecret=e3f56a2abe72165029bef82799945c8b" );
 
@@ -55,7 +58,8 @@ require_once( dirname( __FILE__ ) . '/includes/SME-smugmugembed_shortcode.php' )
 
         register_setting( 'SME_smugmugembed_api_group', 'SME_smugmugembed_api' );
         register_setting( 'SME_smugmugembed_api_group', 'SME_api_progress' );
-        register_setting( 'SME_smugmugembed_settings_group', 'SME_Settings' );        
+        register_setting( 'SME_smugmugembed_settings_group', 'SME_Settings' );       
+		
       }
 
     add_action( 'admin_init', 'SME_smugmugembed_settings' );
@@ -78,7 +82,39 @@ require_once( dirname( __FILE__ ) . '/includes/SME-smugmugembed_shortcode.php' )
         wp_enqueue_script(  'SME_JavaScript' );
         wp_enqueue_style( 'SME_EmbedStyle' );
     }
-//These methods will show the Authorize message from the admin panel if 
+    add_action( 'wp_enqueue_scripts', 'SME_Slider_register_scripts' );
+	
+ function SME_Slider_register_scripts() {
+        wp_register_style( 'SME_Sliderstyles', plugins_url( '/includes/lib/FlexSlider/flexslider.css', __FILE__ ) );
+        wp_register_script( 'SME_Slider', plugins_url( '/includes/lib/FlexSlider/jquery.flexslider.js', __FILE__ ), array( 'jquery' ), 1, true );
+        wp_register_script( 'SME_SliderOptions', plugins_url( '/includes/lib/FlexSlider/SME_FlexSlider_options.js', __FILE__ ), array( 'jquery' ), 1, true );
+
+    }	
+
+    function SME_slider_print_scripts() {
+        global  $SME_slider;
+		wp_enqueue_script(  'SME_Slider' );
+		wp_enqueue_script(  'SME_SliderOptions' );
+        wp_enqueue_style( 'SME_Sliderstyles' );
+
+        $SME_slider_variables = array(
+            'animate'      => $SME_slider[ 'animate' ],
+            'itemWidth'      => $SME_slider[ 'itemWidth' ],
+            'startup'      => $SME_slider[ 'startup' ],
+            'smoothtall'   => $SME_slider[ 'smoothheight' ],
+            'locationicon' => $SME_slider[ 'locationmarkers' ],
+            'navdirection' => $SME_slider[ 'nextarrows' ],
+            'loopit'       => $SME_slider[ 'loopit' ],
+            'slidespeed'   => $SME_slider[ 'cycletime' ],
+            'animatespeed' => $SME_slider[ 'animatetime' ],
+            'delayinit'    => 0,
+            'randomizeit'  => $SME_slider[ 'randomit' ],
+            'hoverpause'   => $SME_slider[ 'pausehover' ],
+        );
+
+        wp_localize_script( 'SME_sliderflexOptions', 'SME_slider', $SME_slider_variables );	
+		}
+		//These methods will show the Authorize message from the admin panel if 
 //smugmug has not authorized SmugMugEmbed
 
   function showSMEAuthorizeMessage() {
@@ -112,14 +148,15 @@ require_once( dirname( __FILE__ ) . '/includes/SME-smugmugembed_shortcode.php' )
         add_option(
             'SME_Settings', array(
                                     'availableGalleries'      => array(''),
-                                    'availableSizes'          => array(''),
-                                    'availableClickResponses'          => array(''),                                    
+                                    'availableSizes'          => array('Thumbnail' =>'Checked'),
+                                    'availableClickResponses' => array('None'=>'checked'),                                    
                                     'clickResponse'        => 0,
                                     'caption'      => 0,
                                     'keywords'         => 0,
                                     'imageName'       => 0,
                                     'newWindow'       => "No",
-                                   'defaultSize'     => 0
+                                    'defaultSize'     => 0,
+                                    'defaultAlign'     => 0
                                )
         );
     }    

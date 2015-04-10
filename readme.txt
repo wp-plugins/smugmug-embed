@@ -56,8 +56,25 @@ The gallery is locked.
 
 == Changelog ==
 
-= 1.01 =
-*  No Changes - Something went wrong while releasing 1.0 on the plugin repo.  Re-releasing as 1.01
+= 2.0 =
+* Added support for XL, X2Large, and X3Large
+* Added functionality to reload images and galleries on demand.  
+  These are cached once hit and the cache is held hourly to increase 
+  performance on large galleries.  Users have requested the ability 
+  to reload this cache on demand
+* Added functionality to uncheck images once inserted into a post.  
+  Before, the same images just inserted would still be checked 
+  if a user selected to add more images.  However, the settings will still remain.
+* Added the ability to set the default image alignment in the settings tab 
+* Fixed an issue which occurred when a user selected a gallery from the 
+  drop down in the media browser, but then chose "Select Gallery".  
+  The system would throw an error before
+* Added ability to select all images from the media chooser SmugMug Embed form
+* If a gallery had a hidden image, then the plugin would not embed any 
+  image after the hidden image.  This is resolved
+* SME now respects the SmugMug hidden flag on photos
+* SME now has the ablitity to create shortcode that will use Wordpress's out of the box galleries style
+* Added a progress indicator on several events in the Embed from SmugMug form
 
 = 1.0 =
 * Added ability to link to Cart in SmugMug.  The image is automatically added to the cart!

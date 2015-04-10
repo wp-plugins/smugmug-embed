@@ -14,28 +14,24 @@
         global $SME_api, $SME_smugmugembed_api, $SME_api_progress,$SME_Settings, $SME_Settings;
        
 
-        echo '<div class="wrap">';
+		echo '<div class="wrap">';
         echo '<h2>SmugMug Embed Settings</h2>';
-
-
-        /*-----------------------------------------------------------------------------------*/
+   /*-----------------------------------------------------------------------------------*/
         /* oAuth process start at the bottom of the page with the last else  */
         /* Now that we have the OAUth credentials we can make a settings page  */
         /* First step is to allow users to filter categories  */
         /*-----------------------------------------------------------------------------------*/
 
         if ( $SME_api_progress == 4 ) {
-
             try {
                 $SME_api->setToken( "id={$SME_smugmugembed_api['api']['id']}", "Secret={$SME_smugmugembed_api['api']['Secret']}" );
                 $galleries = $SME_api->albums_get( 'Extras=Passworded','NickName=' . $SME_smugmugembed_api[ 'api' ][ 'NickName' ] );
-                 $SME_smug_cats = $SME_Settings['availableGalleries'];
-                  $SME_smug_available_sizes = $SME_Settings['availableSizes'];
-                  $SME_smug_available_clicks = $SME_Settings['availableClickResponses'];
+                 if (!empty ($SME_Settings['availableGalleries']) ) $SME_smug_cats = $SME_Settings['availableGalleries'];
+			  $SME_smug_available_sizes = $SME_Settings['availableSizes'];
+               $SME_smug_available_clicks = $SME_Settings['availableClickResponses'];
                 ?>
-
-            <form method="post" action="options.php">
-                <?php settings_fields( 'SME_smugmugembed_settings_group' ); ?>
+				<form method="post" action="options.php">
+				 <?php settings_fields( 'SME_smugmugembed_settings_group' ); ?>
                 <h3>SmugMug Galleries</h3>
                 <table class="form-table">
                     <tr valign="top">
@@ -60,7 +56,6 @@
                                     </div>
                             <?php
                             }
-
                             ?>
 
                         </td>
@@ -69,7 +64,7 @@
                 <p class="submit">
                     <input type="submit" class="button-primary" value="Save All" />
                 </p>
-                <?php
+				<?php
 
 
                 /*-----------------------------------------------------------------------------------*/
@@ -82,7 +77,7 @@
                     <tr valign="top">
                         <th scope="row">What sizes should be available to the author when inserting an image? </th>
                         <td>
-                            <input type="checkbox" id="sizes[thumbnail]" name="SME_Settings[availableSizes][Thumbnail]"  <?php if ( isset( $SME_smug_available_sizes['Thumbnail'] ) ) {
+                            <input type="checkbox" id="sizes[thumbnail]" name="SME_Settings[availableSizes][Thumbnail]"  <?php if ( isset( $SME_smug_available_sizes['Thumbnail'] )) {
                                             echo 'checked="checked"';
                                         } ?> /> Thumbnail<br />
                             <input type="checkbox"  id="sizes[small]" name="SME_Settings[availableSizes][Small]"   <?php if ( isset( $SME_smug_available_sizes['Small'] ) ) {
@@ -93,7 +88,16 @@
                                         } ?> /> Medium<br />
                             <input type="checkbox"  id="sizes[large]" name="SME_Settings[availableSizes][Large]"   <?php if ( isset( $SME_smug_available_sizes['Large'] ) ) {
                                             echo 'checked="checked"';
-                                        } ?> /> Large<br />                                                                             
+                                        } ?> /> Large<br /> 
+                            <input type="checkbox"  id="sizes[xlarge]" name="SME_Settings[availableSizes][XLarge]"   <?php if ( isset( $SME_smug_available_sizes['XLarge'] ) ) {
+                                            echo 'checked="checked"';
+                                        } ?> /> XLarge<br />   
+                            <input type="checkbox"  id="sizes[2xlarge]" name="SME_Settings[availableSizes][2XLarge]"   <?php if ( isset( $SME_smug_available_sizes['2XLarge'] ) ) {
+                                            echo 'checked="checked"';
+                                        } ?> /> 2XLarge<br />  		
+                            <input type="checkbox"  id="sizes[3xlarge]" name="SME_Settings[availableSizes][3XLarge]"   <?php if ( isset( $SME_smug_available_sizes['3XLarge'] ) ) {
+                                            echo 'checked="checked"';
+                                        } ?> /> 3XLarge<br />  											
                         </td>
                     </tr>
                     <tr valign="top">
@@ -103,8 +107,21 @@
                                 <option value="Thumbnail" <?php selected($SME_Settings[ 'defaultSize' ], 'Thumbnail' ); ?>> Thumbnail</option>                            
                                 <option value="Small" <?php selected($SME_Settings[ 'defaultSize' ], 'Small' ); ?>> Small</option>
                                 <option value="Medium" <?php selected($SME_Settings[ 'defaultSize' ], 'Medium' ); ?>> Medium</option>
-                                <option value="Large" <?php selected($SME_Settings[ 'defaultSize' ], 'Large' ); ?>> Large</option>                                
-                            </select>
+                                <option value="Large" <?php selected($SME_Settings[ 'defaultSize' ], 'Large' ); ?>> Large</option>  
+                                <option value="XLarge" <?php selected($SME_Settings[ 'defaultSize' ], 'XLarge' ); ?>> XLarge</option>                                
+                                <option value="2XLarge" <?php selected($SME_Settings[ 'defaultSize' ], '2XLarge' ); ?>> 2XLarge</option>                                
+                                <option value="3XLarge" <?php selected($SME_Settings[ 'defaultSize' ], '3XLarge' ); ?>> 3XLarge</option>                                
+								</select>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row">What should be the default alignment?  </th>
+                        <td>
+                            <select name="SME_Settings[defaultAlign]">
+                                <option value="Left" <?php selected($SME_Settings[ 'defaultAlign' ], 'Left' ); ?>> Left</option>                            
+                                <option value="Center" <?php selected($SME_Settings[ 'defaultAlign' ], 'Center' ); ?>> Center</option>
+                                <option value="Right" <?php selected($SME_Settings[ 'defaultAlign' ], 'Right' ); ?>> Right</option>
+    			    </select>
                         </td>
                     </tr>
                     <tr valign="top">
@@ -180,27 +197,29 @@
                 <p class="submit">
                     <input type="submit" class="button-primary" value="Save All" />
                 </p>
-            </form>
+				</form>
             <?php
+
 
             } catch ( Exception $e ) {
                 echo "{$e->getMessage()} (Error Code: {$e->getCode()})";
             }
 
-            ?>
 
-        <hr />
+?>
+			<hr />
         <div class="SMEsmug_reset">
             <p>If you want to reset all available options, click this button</p>
             <form method="post" action="options.php">
                 <?php settings_fields( 'SME_smugmugembed_settings_group' ); ?>
                 <input type="hidden" name="SME_Settings[availableGalleries]" value="" />
-                <input type="hidden" name="SME_Settings[availableClickResponses]" value="" />
+                <input type="hidden" name="SME_Settings[availableClickResponses]" value="None" />
                 <input type="hidden" name="SME_Settings[clickResponse]" value="0" />
                 <input type="hidden" name="SME_Settings[caption]" value="0" />
                 <input type="hidden" name="SME_Settings[keywords]" value="0" />
                 <input type="hidden" name="SME_Settings[imageName]" value="0" />
                 <input type="hidden" name="SME_Settings[defaultSize]" value="0" />
+                <input type="hidden" name="SME_Settings[defaultAlign]" value="0" />
                 <p class="submit">
                     <input type="submit" class="button-secondary" value="Reset Options" />
                 </p>
@@ -222,7 +241,7 @@
 
         <?php
         }
-
+		
 
         /*-----------------------------------------------------------------------------------*/
         /* Step 3 in API OAuth approval */
@@ -359,8 +378,8 @@
         }
 
         echo '</div>';
+		
     }
-
     /*-----------------------------------------------------------------------------------*/
     /* Create settings menu for our functions */
     /*-----------------------------------------------------------------------------------*/

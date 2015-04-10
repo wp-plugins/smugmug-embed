@@ -1,45 +1,45 @@
 <?php 
 /** 
- * SME_phpSmug - SME_phpSmug is a PHP wrapper class for the SmugMug API. The intention 
+ * phpSmug - phpSmug is a PHP wrapper class for the SmugMug API. The intention 
  *		     of this class is to allow PHP application developers to quickly 
  *			 and easily interact with the SmugMug API in their applications, 
  *			 without having to worry about the finer details of the API.
  *
  * @author Colin Seymour <lildood@gmail.com>
- * @version 3.4
- * @package SME_phpSmug
+ * @version 3.5
+ * @package phpSmug
  * @license GPL 3 {@link http://www.gnu.org/copyleft/gpl.html}
  * @copyright Copyright (c) 2008 Colin Seymour
  * 
- * This file is part of SME_phpSmug.
+ * This file is part of phpSmug.
  *
- * SME_phpSmug is free software: you can redistribute it and/or modify
+ * phpSmug is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * SME_phpSmug is distributed in the hope that it will be useful,
+ * phpSmug is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with SME_phpSmug.  If not, see <http://www.gnu.org/licenses/>.
+ * along with phpSmug.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
  * For more information about the class and upcoming tools and toys using it,
- * visit {@link http://SME_phpSmug.com/}.
+ * visit {@link http://phpsmug.com/}.
  *
  * For installation and usage instructions, open the README.txt file 
  * packaged with this class. If you don't have a copy, you can refer to the
  * documentation at:
  * 
- *          {@link http://SME_phpSmug.com/docs/}
+ *          {@link http://phpsmug.com/docs/}
  * 
- * SME_phpSmug is inspired by phpFlickr 2.1.0 ({@link http://www.phpflickr.com}) by Dan Coulter
+ * phpSmug is inspired by phpFlickr 2.1.0 ({@link http://www.phpflickr.com}) by Dan Coulter
  * 
- * Please help support the maintenance and development of SME_phpSmug by making
- * a donation ({@link http://SME_phpSmug.com/donate/}).
+ * Please help support the maintenance and development of phpSmug by making
+ * a donation ({@link http://phpsmug.com/donate/}).
  **/
 
 /**
@@ -49,12 +49,12 @@
 class SME_phpSmugException extends Exception {}
 
 /**
- * SME_phpSmug - all of the SME_phpSmug functionality is provided in this class
+ * phpSmug - all of the phpSmug functionality is provided in this class
  *
- * @package SME_phpSmug
+ * @package phpSmug
  **/
 class SME_phpSmug {
-	static $version = '3.4';
+	static $version = '3.5';
 	private $cacheType = FALSE;
 	var $SessionID;
 	var $loginType;
@@ -65,7 +65,6 @@ class SME_phpSmug {
 	var $oauth_token;
 	var $mode;
 	private $secure = false;
-	private $req;
 	private $adapter = 'curl';
 	
 	/**
@@ -83,7 +82,7 @@ class SME_phpSmug {
     var $max_cache_rows = 1000;
 	
 	/**
-	 * Constructor to set up a SME_phpSmug instance.
+	 * Constructor to set up a phpSmug instance.
 	 * 
 	 * The Application Name (AppName) is not obligatory, but it helps 
 	 * SmugMug diagnose any problems users of your application may encounter.
@@ -94,7 +93,7 @@ class SME_phpSmug {
 	 * The API Key must be set before any calls can be made.  You can
      * get your own at {@link http://www.smugmug.com/hack/apikeys}
      * 
-     * By default SME_phpSmug will use the latest stable API endpoint, but 
+     * By default phpSmug will use the latest stable API endpoint, but 
      * you can over-ride this when instantiating the instance.
 	 *
 	 * @return	void
@@ -159,7 +158,7 @@ class SME_phpSmug {
 	 *
 	 * Params can be passed as an associative array or a set of param=value strings.
 	 *
-	 * SME_phpSmug uses the PEAR MDB2 module to interact with the database. You will
+	 * phpSmug uses the PEAR MDB2 module to interact with the database. You will
 	 * need to install PEAR, the MDB2 module and corresponding database driver yourself
 	 * in order to use database caching.
 	 *
@@ -178,7 +177,7 @@ class SME_phpSmug {
 	 * @param	integer		$cache_expire Cache timeout in seconds. This defaults
 	 *						to 3600 seconds (1 hour) if not specified.
 	 * @param	string		$table If using type "db", this is the database table
-	 *						name that will be used.  Defaults to "SME_phpSmug_cache".
+	 *						name that will be used.  Defaults to "phpsmug_cache".
 	 * @return	mixed		Returns TRUE if caching is enabled successfully, else
 	 *						returns an error and disables caching.
 	 **/
@@ -217,7 +216,7 @@ class SME_phpSmug {
             }
         } elseif ( $this->cacheType ==  'fs' ) {
 			if ( file_exists( $args['cache_dir'] ) && ( is_dir( $args['cache_dir'] ) ) ) {
-				$this->cache_dir = realpath( $args['cache_dir'] ).'/SME_phpSmug/';
+				$this->cache_dir = realpath( $args['cache_dir'] ).'/phpSmug/';
 				if ( is_writeable( realpath( $args['cache_dir'] ) ) ) {
 					if ( !is_dir( $this->cache_dir ) ) {
 						mkdir( $this->cache_dir, 0755 );
@@ -245,7 +244,7 @@ class SME_phpSmug {
 	 *
 	 * @access	private
 	 * @return	mixed		Unparsed serialized PHP, or FALSE
-	 * @param	array		$request Request to the SmugMug created by one of the later functions in SME_phpSmug.
+	 * @param	array		$request Request to the SmugMug created by one of the later functions in phpSmug.
 	 **/
     private function getCached( $request )
 	{
@@ -279,7 +278,7 @@ class SME_phpSmug {
 	 *
 	 * @access	private
 	 * @param	array		$request Request to the SmugMug created by one of the
-	 *						later functions in SME_phpSmug.
+	 *						later functions in phpSmug.
 	 * @param	string		$response Response from a successful request() method
 	 *						call.
 	 * @return	null|TRUE
@@ -392,7 +391,6 @@ class SME_phpSmug {
 		} else {
 			$this->loginType = 'oauth';
 		}
-
         // Process arguments, including method and login data.
         $args = array_merge( $defaultArgs, $args );
 		$keys = array_map( array( 'SME_phpSmug', 'urlencodeRFC3986' ), array_keys( $args ) );
@@ -425,7 +423,7 @@ class SME_phpSmug {
     }
 	
 	/**
-	 * Set a proxy for all SME_phpSmug calls.
+	 * Set a proxy for all phpSmug calls.
 	 *
 	 * Params can be passed as an associative array or a set of param=value strings.
 	 *
@@ -454,17 +452,17 @@ class SME_phpSmug {
     }
 
 	/**
-	 * Set Token and Token Secret for use by other methods in SME_phpSmug.
+	 * Set Token and Token Secret for use by other methods in phpSmug.
 	 *
 	 * Use this method to pull in the token and token secret obtained during 
 	 * the OAuth authorisation process.
 	 *
-	 * If OAuth is being used, this method MUST be called so SME_phpSmug knows about
+	 * If OAuth is being used, this method MUST be called so phpSmug knows about
 	 * the token and token secret.
 	 *
-	 * NOTE: It's up to the application developer using SME_phpSmug to store the Access
+	 * NOTE: It's up to the application developer using phpSmug to store the Access
 	 * token and token secret in a location convenient for their application.
-	 * SME_phpSmug can not do this as all storage and caching done by SME_phpSmug is 
+	 * phpSmug can not do this as all storage and caching done by phpSmug is 
 	 * of a temporary nature.
 	 *
 	 * @access	public
@@ -527,7 +525,7 @@ class SME_phpSmug {
 	 * Single login function for all non-OAuth logins.
 	 * 
 	 * I've created this function to try and get things consistent across the 
-	 * entire SME_phpSmug functionality.  
+	 * entire phpSmug functionality.  
 	 * 
 	 * This method will determine the login type from the arguments provided. If 
 	 * no arguments are provide, anonymous login will be used.
@@ -619,7 +617,7 @@ class SME_phpSmug {
 			$args['FileName'] = basename( $args['File'] );
 		}
 
-		// Ensure the FileName is SME_phpSmug::urlencodeRFC3986 encoded - caters for stange chars and spaces
+		// Ensure the FileName is phpSmug::urlencodeRFC3986 encoded - caters for stange chars and spaces
 		$args['FileName'] = SME_phpSmug::urlencodeRFC3986( $args['FileName'] );
 
 		// OAuth Stuff
@@ -656,14 +654,14 @@ class SME_phpSmug {
 		if ( $this->loginType == 'authd' ) {
 			$upload_req->setHeader( 'X-Smug-SessionID', $this->SessionID );
 		} else {
-			$upload_req->setHeader( 'Authorization', 'OAuth realm="http://api.smugmug.com/",
-				oauth_consumer_key="'.$this->APIKey.'",
-				oauth_token="'.$this->oauth_token.'",
-				oauth_signature_method="'.$this->oauth_signature_method.'",
-				oauth_signature="'.urlencode( $sig ).'",
-				oauth_timestamp="'.$this->oauth_timestamp.'",
-				oauth_version="1.0",
-				oauth_nonce="'.$this->oauth_nonce.'"' );
+			$upload_req->setHeader( 'Authorization', 'OAuth realm="http://api.smugmug.com/",'
+				.'oauth_consumer_key="'.$this->APIKey.'",'
+				.'oauth_token="'.$this->oauth_token.'",'
+				.'oauth_signature_method="'.$this->oauth_signature_method.'",'
+				.'oauth_signature="'.urlencode( $sig ).'",'
+				.'oauth_timestamp="'.$this->oauth_timestamp.'",'
+				.'oauth_version="1.0",'
+				.'oauth_nonce="'.$this->oauth_nonce.'"' );
 		}
 			
 		$upload_req->setHeader( array( 'X-Smug-Version' => $this->APIVer,
@@ -672,13 +670,10 @@ class SME_phpSmug {
 									   'X-Smug-Filename'=> basename($args['FileName'] ) ) ); // This is actually optional, but we may as well use what we're given
 		
 		/* Optional Headers */
-		( isset( $args['ImageID'] ) ) ? $upload_req->setHeader( 'X-Smug-ImageID', $args['ImageID'] ) : false;
-		( isset( $args['Caption'] ) ) ? $upload_req->setHeader( 'X-Smug-Caption', $args['Caption'] ) : false;
-		( isset( $args['Keywords'] ) ) ? $upload_req->setHeader( 'X-Smug-Keywords', $args['Keywords'] ) : false;
-		( isset( $args['Latitude'] ) ) ? $upload_req->setHeader( 'X-Smug-Latitude', $args['Latitude'] ) : false;
-		( isset( $args['Longitude'] ) ) ? $upload_req->setHeader( 'X-Smug-Longitude', $args['Longitude'] ) : false;
-		( isset( $args['Altitude'] ) ) ? $upload_req->setHeader( 'X-Smug-Altitude', $args['Altitude'] ) : false;
-		( isset( $args['Hidden'] ) ) ? $upload_req->setHeader( 'X-Smug-Hidden', $args['Hidden'] ) : false;
+		foreach( $args as $arg => $value ) {
+			if ( $arg == 'File' ) continue;
+			$upload_req->setHeader( 'X-Smug-' . $arg, $value );
+		}
 
 		//$proto = ( $this->oauth_signature_method == 'PLAINTEXT' || $this->secure ) ? 'https' : 'http';	// No secure uploads at this time.
 		//$upload_req->setURL( $proto . '://upload.smugmug.com/'.$args['FileName'] );
@@ -709,7 +704,7 @@ class SME_phpSmug {
 	
 	/**
 	 * Dynamic method handler.  This function handles all SmugMug method calls
-	 * not explicitly implemented by SME_phpSmug.
+	 * not explicitly implemented by phpSmug.
 	 * 
  	 * @access	public
 	 * @uses	request
@@ -799,19 +794,19 @@ class SME_phpSmug {
 	  *
 	  * In order for this method to correctly generate a signature, setToken()
 	  * MUST be called to set the token and token secret within the instance of
-	  * SME_phpSmug.
+	  * phpSmug.
 	  *
 	  * @access	private
 	  * @param	string		$apicall The API method.
 	  * @param	mixed		$apiargs The arguments passed to the API method.
 	  * @return string
 	  **/
-	 private function generate_signature( $apicall, $apiargs = NULL )
+	 private function generate_signature( $apicall, $apiargs = NULL, $url = NULL )
 	 {
 		$this->oauth_timestamp = time();
 		$this->oauth_nonce = md5(time() . mt_rand());
 
-		if ( $apicall != 'Upload' ) {
+		if ( !is_null( $apicall ) && $apicall != 'Upload' ) {
 			if ( substr( $apicall,0,8 ) != 'smugmug.' ) {
 				$apicall = 'smugmug.' . $apicall;
 			}
@@ -822,7 +817,9 @@ class SME_phpSmug {
 			$this->oauth_signature_method = 'HMAC-SHA1';
 			$encKey = SME_phpSmug::urlencodeRFC3986( $this->OAuthSecret ) . '&' . SME_phpSmug::urlencodeRFC3986( $this->oauth_token_secret );
 			
-			if ( strpos( $apicall, 'Token' ) || $this->secure && $apicall != 'Upload' ) {
+			if ( is_null( $apicall ) && !is_null( $url ) ) {
+				$endpoint = $url;
+			} else if ( strpos( $apicall, 'Token' ) || $this->secure && $apicall != 'Upload' ) {
 				$endpoint = "https://secure.smugmug.com/services/api/php/{$this->APIVer}/";
 			} else if ( $apicall == 'Upload' ) {
 				//$proto = ( $this->oauth_signature_method == 'PLAINTEXT' || $this->secure ) ? 'https' : 'http';
@@ -832,7 +829,13 @@ class SME_phpSmug {
 				$endpoint = "http://api.smugmug.com/services/api/php/{$this->APIVer}/";
 			}
 			
-			$method = ( $apicall == 'Upload' ) ? 'PUT' : 'POST';
+			if ( is_null( $apicall ) ) {
+				$method = 'GET';
+			} else if ( $apicall == 'Upload' ) {
+				$method = 'PUT';
+			} else {
+				$method = 'POST';
+			}
 			$params = array (
 				'oauth_version'             => '1.0',
 				'oauth_nonce'               => $this->oauth_nonce,
@@ -840,7 +843,7 @@ class SME_phpSmug {
 				'oauth_consumer_key'        => $this->APIKey,
 				'oauth_signature_method'    => $this->oauth_signature_method
 				);
-			if ( $apicall != 'Upload' ) $params = array_merge( $params, array('method' => $apicall ) );
+			if ( !is_null( $apicall ) && $apicall != 'Upload' ) $params = array_merge( $params, array('method' => $apicall ) );
 			$params = ( !empty( $this->oauth_token ) ) ? array_merge( $params, array( 'oauth_token' => $this->oauth_token ) ) : $params;
 			if ( $apicall != 'Upload' ) $params = ( !empty( $apiargs ) ) ? array_merge( $params, $apiargs ) : $params;
 		    $keys = array_map( array( 'SME_phpSmug', 'urlencodeRFC3986' ), array_keys( $params ) );
@@ -885,7 +888,38 @@ class SME_phpSmug {
 		}
 		return $args;
 	  }
-	   
+
+	/**
+	 * Sign the passed resource with the OAuth params.
+	 *
+	 * This essentially generates a signature for the passed URL and returns a
+	 * string with the OAuth parameters and signature appended.
+	 *
+	 * This is very useful for allowing people to display images that are not set
+	 * to allow external view within the gallery's settings on SmugMug.
+	 *
+	 * @param   string		$url The URL to the resource you wish to sign with the  	
+	 * @access  public
+	 * @return  string 		Signed URL
+	 */
+	public function signResource( $url )
+	{
+		if ( $this->OAuthSecret ) {
+			$sig = $this->generate_signature( null, null, $url );
+			$oauth_params = array (
+				'oauth_version'             => '1.0',
+				'oauth_nonce'               => $this->oauth_nonce,
+				'oauth_timestamp'           => $this->oauth_timestamp,
+				'oauth_consumer_key'        => $this->APIKey,
+				'oauth_signature_method'    => $this->oauth_signature_method,
+				'oauth_token'				=> $this->oauth_token,
+				'oauth_signature'           => $sig
+				);
+
+			// Build and return the query string.
+			return $url . '?' . http_build_query( $oauth_params );
+		}
+	}
 }
 
 
@@ -896,7 +930,7 @@ class SME_phpSmug {
  * I've included them in this file.
  *
  * The code below has been taken from the Habari project - http://habariproject.org
- * and modified to suit the needs of SME_phpSmug.
+ * and modified to suit the needs of phpSmug.
  *
  * The original source is distributed under the Apache License Version 2.0
  */
@@ -1295,7 +1329,7 @@ class SME_phpSmugCurlRequestProcessor implements SME_phpSmugRequestProcessor
 		foreach ( $headers as $k => $v ) {
 			$merged_headers[] = $k . ': ' . $v;
 		}
-
+		
 		$ch = curl_init();
 
 		$options = array(
